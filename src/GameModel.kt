@@ -6,7 +6,7 @@ object GameModel {
     val foundationPiles = arrayOf(FoundationPile(clubs),
             FoundationPile(diamonds), FoundationPile(hearts),
             FoundationPile(spades))
-    val tabluePiles = Array(7, { TableauPile()})
+    val tableauPiles = Array(7, { TableauPile()})
 
     fun resetGame() {
         wastePile.clear()
@@ -15,9 +15,9 @@ object GameModel {
 
         // set up each of the tablue piles where the first pile has 1 card,
         // the second pile has 2 piles, and so on until 7
-        tabluePiles.forEachIndexed { i, _ ->
+        tableauPiles.forEachIndexed { i, _ ->
             val cardsInPile: MutableList<Card> = Array(i + 1, { deck.drawCard() }).toMutableList()
-            tabluePiles[i] = TableauPile(cardsInPile)
+            tableauPiles[i] = TableauPile(cardsInPile)
         }
     }
 
@@ -52,7 +52,7 @@ object GameModel {
     }
 
     fun onTableauTap(tableauIndex: Int, cardIndex: Int) {
-        val tableauPile = tabluePiles[tableauIndex]
+        val tableauPile = tableauPiles[tableauIndex]
         if(tableauPile.cards.size > 0) {
             val cards = tableauPile.cards.subList(cardIndex, tableauPile.cards.lastIndex + 1)
             if (playCards(cards)) {
@@ -65,7 +65,7 @@ object GameModel {
         if (cards.size == 1) {
             return playCard(cards.first())
         } else {
-            tabluePiles.forEach {
+            tableauPiles.forEach {
                 if (it.addCards(cards)) {
                     return true
                 }
@@ -80,7 +80,7 @@ object GameModel {
                 return true
             }
         }
-        tabluePiles.forEach {
+        tableauPiles.forEach {
             if (it.addCards(mutableListOf(card))) {
                 return true
             }
@@ -99,7 +99,7 @@ object GameModel {
         println()
         for (i in 0..12) {
             var row = ""
-            tabluePiles.forEach {
+            tableauPiles.forEach {
                 row += if (it.cards.size > i) "${it.cards[i]}" else "   "
                 row += "   "
             }

@@ -12,6 +12,7 @@ class Deck {
     // reset the deck for a new game
     fun reset() {
         cardsInDeck = cards.toMutableList()
+        cardsInDeck.forEach { it.faceUp = false}
         cardsInDeck.shuffle()
     }
 
